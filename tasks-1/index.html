@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./first.js"></script>
+  <script src="./second.js"></script>
+  <style>div{margin: 20px;}</style>
+</head>
+<body>
+
+    <div>
+        <span>Task 1a</span> <br />
+        <span>Please, provide number to check if it contains "3":</span> <br />
+        <input type="text" id="three-check" value="6">
+        <input type="submit" onclick="checkThree()"> <br />
+    
+        <span>Details:</span>
+        <span id="details"></span> <br />
+        <span>Result:</span>
+        <span id="result-first"></span>
+        
+    </div>
+
+  <div>
+      <span>Task 1b</span> <br />
+      <span>Please, provide number to revert it:</span> <br />
+      <input type="text" id="reversion" value="304509">
+      <input type="submit" onclick="reverseNumber()"> <br />
+  
+      <span>Result:</span> <br />
+      <span id="result-second"></span>
+      
+    </div>
+  <div>
+    <span>Task 2</span> <br />
+    <span>Please, provide number:</span> <br />
+    <input type="text" id="range" value="10000">
+    <input type="submit" onclick="maxSumDivisors()"> <br />
+
+    <span>Result:</span> <br />
+    <span id="result"></span>
+    
+  </div>
+</body>
+</html>
