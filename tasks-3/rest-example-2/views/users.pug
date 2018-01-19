@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  //- p #{users}
+ 
+  table
+    tr
+      th Name
+      th Surname
+      th Email
+      th Age
+      th Delete
+      th Edit
+    each item in users
+      tr(user-id=item.id)
+        td= item.name
+        td= item.surname
+        td= item.email
+        td= item.age
+        td 
+          button(type='button' delete-id=item.id) X
+        td 
+          button(type='button' edit-id=item.id) Edit
+
+
+  form(action="get")
+    span Text
+    input(type="text") 
