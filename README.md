@@ -38,6 +38,8 @@ user.name user.surname mail age
 - [ ] cover task 2 with jasmine tests
 - [ ] cover task 3 with jasmine tests
 
+###### Make tests with ES syntax !!!
+
 ###### Tasks (Thursday)
 1. описати різні методи, додати кнопки add/delete user
     - create user (post)
@@ -55,8 +57,3 @@ user.name user.surname mail age
 - [ ] make form with ajax xhr request 
 
 
-
-
-
-питання
-1. чи потрібно передбачати попадання в функцію аргументів неправильного типу якщо вони там не повинні бути, або малоймовірно що попадуть
