@@ -18,11 +18,12 @@ block content
         td= item.email
         td= item.age
         td 
-          button(type='button' delete-id=item.id) X
+          form(action="http://127.0.0.1:3000/users" method="get")
+            input(type="submit" value="Delete" name=item.id)
         td 
-          button(type='button' edit-id=item.id) Edit
+          form(action="http://127.0.0.1:3000/users" method="get") 
+            input(type="submit" value="Edit" name="user"+item.id)
 
-
-  form(action="get")
-    span Text
-    input(type="text") 
+//- http://example.com/over/there?name=ferret
+    //- span Text
+    //- input(type="text")
