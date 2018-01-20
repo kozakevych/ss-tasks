@@ -8,8 +8,8 @@ const bodyParser = require('body-parser');
 // const routes = require('./routes/routes');
 
 const app = express();
-
 const fs = require('fs');
+
 
 let userList;
 const userFinder = () => {
@@ -20,6 +20,15 @@ const userFinder = () => {
 }
 userFinder();
 
+const findAndRemove = (array, property, value) => {
+  array.forEach(function(result, index) {
+    if(result[property] == value) {
+      //Remove from array
+      array.splice(index, 1);
+    }    
+  });
+}
+
 // define the home page route
 app.get('/', (req, res) => {
   res.render('index', { title: 'This is home page' });
@@ -29,28 +38,25 @@ app.get('/', (req, res) => {
 // define the about route
 app.get('/users', (req, res) => {
   
-  let objectToEdit = Object.keys(req.query);
-  // delete userList.objectToEdit;
-  console.log(objectToEdit);
-  findAndRemove(userList, 'id', objectToEdit);
-  console.log(userList);
+  
+  if (Object.keys(req.query).length == 4) {
+
+    let newUser = req.query;
+    console.log(newUser);
+    userList.push(newUser);
+    console.log("add user");
+    // check id
+
+  } else if (Object.keys(req.query).length == 1){
+
+    console.log("delete user");
+    let objectToEdit = Object.keys(req.query);
+    findAndRemove(userList, 'id', objectToEdit);
+  }
+  
   res.render('users', { users: userList });
-  // req.param.variable_name
-// console.log("req.param.id", Object.keys(req.query));
 
 })
-function findAndRemove(array, property, value) {
-  array.forEach(function(result, index) {
-    if(result[property] == value) {
-      //Remove from array
-      array.splice(index, 1);
-    }    
-  });
-  console.log("wii")
-}
-//Checks countries.result for an object with a property of 'id' whose value is 'AF'
-//Then removes it ;p
-// findAndRemove(countries.results, 'id', 'AF');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

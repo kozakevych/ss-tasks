@@ -4,6 +4,7 @@ block content
   //- p #{users}
  
   table
+    caption List of Users
     tr
       th Name
       th Surname
@@ -24,6 +25,17 @@ block content
           form(action="http://127.0.0.1:3000/users" method="get") 
             input(type="submit" value="Edit" name="user"+item.id)
 
+  form(action="http://127.0.0.1:3000/users" method="get")
+    h4 Add new user
+    span Name:
+    input(type="text" name="name")
+    span Surname:
+    input(type="text" name="surname")
+    span Email:
+    input(type="text" name="email")
+    span Age:
+    input(type="text" name="age")
+    input(type="submit" value="Add")
 //- http://example.com/over/there?name=ferret
     //- span Text
     //- input(type="text")
