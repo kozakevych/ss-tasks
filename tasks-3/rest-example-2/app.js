@@ -51,9 +51,15 @@ app.get('/users', (req, res) => {
 
     console.log("delete user");
     let objectToEdit = Object.keys(req.query);
+
+    objectToEdit = objectToEdit[0];
+ console.log("objectToEdit ", objectToEdit);
     findAndRemove(userList, 'id', objectToEdit);
   }
   
+  // userList
+//  console.log("userList ", userList);
+
   res.render('users', { users: userList });
 
 })
