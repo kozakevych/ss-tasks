@@ -13,16 +13,16 @@ block content
       th Delete
       th Edit
     each item in users
-      tr(user-id=item.id)
+      tr(user-id=item.id onclick="deleteUser()")
         td= item.name
         td= item.surname
         td= item.email
         td= item.age
         td 
 
-          form(action="/users?_method=DELETE" method="post")
+          //- form(action="/users?_method=DELETE" method="post")
             button(type="submit") Delete resourse
-
+          button(type="button" user-id=item.id) Delet user
             //- input(type="submit" value="Delete" name=item.id)
         td 
           form(action="http://127.0.0.1:3000/users" method="get") 

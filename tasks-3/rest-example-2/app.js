@@ -56,14 +56,24 @@ app.get('/users', (req, res) => {
   // } else if (Object.keys(req.query).length == 1){
 
   //   console.log("delete user");
-  //   let objectToEdit = Object.keys(req.query);
   //   findAndRemove(userList, 'id', objectToEdit);
   // }
   
   res.render('users', { users: userList });
+  
+})
+app.delete('/users/:id', (req, res) => {
+  
+  let objectToEdit = req.params;
+  // debugger;
+  objectToEdit = objectToEdit.id;
+  console.log(objectToEdit);
+  
+  findAndRemove(userList, 'id', objectToEdit);
+  // console.log(userList);
+  res.render('users', { users: userList });
 
 })
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
