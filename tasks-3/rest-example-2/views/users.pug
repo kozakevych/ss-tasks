@@ -19,8 +19,11 @@ block content
         td= item.email
         td= item.age
         td 
-          form(action="http://127.0.0.1:3000/users" method="get")
-            input(type="submit" value="Delete" name=item.id)
+
+          form(action="/users?_method=DELETE" method="post")
+            button(type="submit") Delete resourse
+
+            //- input(type="submit" value="Delete" name=item.id)
         td 
           form(action="http://127.0.0.1:3000/users" method="get") 
             input(type="submit" value="Edit" name="user"+item.id)

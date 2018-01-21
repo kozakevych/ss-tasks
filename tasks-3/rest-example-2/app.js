@@ -5,6 +5,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const methodOverride = require('method-override');
+
 // const routes = require('./routes/routes');
 
 const app = express();
@@ -36,23 +38,27 @@ app.get('/', (req, res) => {
 })
 
 // define the about route
+app.use(methodOverride('_method', (req,res) => {
+  req.send("holla");
+}))  
+// app.post('/users', (req,res)=>{console.log("ds")});
 app.get('/users', (req, res) => {
   
-  
-  if (Object.keys(req.query).length == 4) {
 
-    let newUser = req.query;
-    console.log(newUser);
-    userList.push(newUser);
-    console.log("add user");
-    // check id
+  // if (Object.keys(req.query).length == 4) {
 
-  } else if (Object.keys(req.query).length == 1){
+  //   let newUser = req.query;
+  //   console.log(newUser);
+  //   userList.push(newUser);
+  //   console.log("add user");
+  //   // check id
 
-    console.log("delete user");
-    let objectToEdit = Object.keys(req.query);
-    findAndRemove(userList, 'id', objectToEdit);
-  }
+  // } else if (Object.keys(req.query).length == 1){
+
+  //   console.log("delete user");
+  //   let objectToEdit = Object.keys(req.query);
+  //   findAndRemove(userList, 'id', objectToEdit);
+  // }
   
   res.render('users', { users: userList });
 
