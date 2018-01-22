@@ -32,15 +32,16 @@ var addUser = function () {
   
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
+  // xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function () {
-    var users = JSON.parse(xhr.responseText);
-    if (xhr.readyState == 4 && xhr.status == "200") {
-      console.table(users);
+    // var users = JSON.parse(xhr.responseText);
+    if (xhr.readyState == 4 && xhr.status == "201") {
+      console.log("success");
     } else {
-      console.error(users);
+      console.error("fail");
     }
   }
-  console.log(json);
+  console.log(newUser);
   xhr.send(json);
 }

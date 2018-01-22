@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  //- p #{users}
  
   table
     caption List of Users
@@ -11,7 +10,7 @@ block content
       th Email
       th Age
       th Delete
-      th Edit
+      //- th Edit
     each item in users
       tr(user-id=item.id onclick="deleteUser()")
         td= item.name
@@ -19,26 +18,19 @@ block content
         td= item.email
         td= item.age
         td 
-
-          //- form(action="/users?_method=DELETE" method="post")
-            button(type="submit") Delete resourse
-          button(type="button" user-id=item.id) Delet user
-            //- input(type="submit" value="Delete" name=item.id)
+          button(type="button" user-id=item.id) Delete user
         td 
-          form(action="http://127.0.0.1:3000/users" method="get") 
+          //- form(action="http://127.0.0.1:3000/users" method="get") 
             input(type="submit" value="Edit" name="user"+item.id)
 
-  form(action="http://127.0.0.1:3000/users" method="get")
+  div
     h4 Add new user
     span Name:
-    input(type="text" name="name")
+    input(type="text" name="name" id="new-user-name")
     span Surname:
-    input(type="text" name="surname")
+    input(type="text" name="surname" id="new-user-surname")
     span Email:
-    input(type="text" name="email")
+    input(type="text" name="email" id="new-user-email")
     span Age:
-    input(type="text" name="age")
-    input(type="submit" value="Add")
-//- http://example.com/over/there?name=ferret
-    //- span Text
-    //- input(type="text")
+    input(type="text" name="age" id="new-user-age")
+    input(type="submit" value="Add" onclick="addUser()")

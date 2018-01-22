@@ -33,16 +33,21 @@ app.get('/', (req, res) => {
 
 })
 
-app.post('/users', (req,res) => {
-  console.log(req)
-  console.log("works")
-});
 
 app.get('/users', (req, res) => {
   
   res.render('users', { users: userList });
   
 })
+
+app.post('/users', (req, res) => {
+  console.log(req.body.newUser)
+  console.log("req.body.newUser")
+  // res.send()
+  res.render('users', { users: userList });
+  console.log("works")
+});
+
 
 app.delete('/users/:id', (req, res) => {
   
