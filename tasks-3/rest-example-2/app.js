@@ -33,7 +33,11 @@ app.get('/', (req, res) => {
 
 })
 
-app.post('/users', (req,res)=>{console.log(req.body)});
+app.post('/users', (req,res) => {
+  console.log(req)
+  console.log("works")
+});
+
 app.get('/users', (req, res) => {
   
   res.render('users', { users: userList });
