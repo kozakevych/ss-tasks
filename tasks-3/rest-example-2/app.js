@@ -5,10 +5,6 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const methodOverride = require('method-override');
-
-// const routes = require('./routes/routes');
-
 const app = express();
 const fs = require('fs');
 
@@ -37,43 +33,25 @@ app.get('/', (req, res) => {
 
 })
 
-// define the about route
-app.use(methodOverride('_method', (req,res) => {
-  req.send("holla");
-}))  
-// app.post('/users', (req,res)=>{console.log("ds")});
+app.post('/users', (req,res)=>{console.log(req.body)});
 app.get('/users', (req, res) => {
-  
-
-  // if (Object.keys(req.query).length == 4) {
-
-  //   let newUser = req.query;
-  //   console.log(newUser);
-  //   userList.push(newUser);
-  //   console.log("add user");
-  //   // check id
-
-  // } else if (Object.keys(req.query).length == 1){
-
-  //   console.log("delete user");
-  //   findAndRemove(userList, 'id', objectToEdit);
-  // }
   
   res.render('users', { users: userList });
   
 })
+
 app.delete('/users/:id', (req, res) => {
   
   let objectToEdit = req.params;
   // debugger;
-  objectToEdit = objectToEdit.id;
+  objectToEdit = '' + objectToEdit.id;
   console.log(objectToEdit);
-  
   findAndRemove(userList, 'id', objectToEdit);
-  // console.log(userList);
-  res.render('users', { users: userList });
-
+  
+  res.render('users', { users: userList })
 })
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
