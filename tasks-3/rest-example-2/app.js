@@ -101,8 +101,6 @@ app.put('/users', (req, res) => {
   
   let objectToEdit = req.body;
   let id = objectToEdit.id;
-  // debugger;
-  // objectToEdit = '' + objectToEdit.id;
   findAndUpdate(userList, 'id', id, objectToEdit);
   console.log(objectToEdit);
   
