@@ -36,33 +36,33 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'This is home page' });
 
 })
+app.use(bodyParser.urlencoded())
 
+
+app.use(methodOverride(options))
+// app.use(methodOverride(function (req, res) {
+//   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+//     // look in urlencoded POST bodies and delete it
+//     var method = req.body._method
+//     delete req.body._method
+//     return method
+//   }
+// }))
 // define the about route
-app.use(methodOverride('_method', (req,res) => {
-  req.send("holla");
-}))  
-// app.post('/users', (req,res)=>{console.log("ds")});
-app.get('/users', (req, res) => {
-  
-
-  // if (Object.keys(req.query).length == 4) {
-
-  //   let newUser = req.query;
-  //   console.log(newUser);
-  //   userList.push(newUser);
-  //   console.log("add user");
-  //   // check id
-
-  // } else if (Object.keys(req.query).length == 1){
-
-  //   console.log("delete user");
-  //   let objectToEdit = Object.keys(req.query);
-  //   findAndRemove(userList, 'id', objectToEdit);
-  // }
-  
+// app.use(methodOverride('_method', (req,res) => {
+//   req.send("holla");
+// }))  
+app.get('/users', (req,res)=>{
   res.render('users', { users: userList });
+});
+// app.delete('/users/:id', (req, res) => {
+// app.use(methodOverride('_method=DELETE'))
+// app.delete('/users/:id', (req, res) => {
+  
+//   console.log("success");
+//   res.render('users', { users: userList });
 
-})
+// })
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
