@@ -19,13 +19,13 @@ block content
         td= item.email
         td= item.age
         td 
-          form(action="http://127.0.0.1:3000/users" method="get")
-            input(type="submit" value="Delete" name=item.id)
+          form(action="http://127.0.0.1:3000/users/"+item.id method="get")
+            input(type="submit" value="Delete")
         td 
           form(action="http://127.0.0.1:3000/users" method="get") 
-            input(type="submit" value="Edit" name="user"+item.id)
+            input(type="submit" value="Edit" name=item.id)
 
-  form(action="http://127.0.0.1:3000/users" method="get")
+  form(action="http://127.0.0.1:3000/users" method="post")
     h4 Add new user
     span Name:
     input(type="text" name="name")

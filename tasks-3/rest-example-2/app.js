@@ -11,20 +11,53 @@ const app = express();
 const fs = require('fs');
 
 
-let userList;
-const userFinder = () => {
-  fs.readFile(__dirname + '/models/users-list.js', 'utf-8', (err, data) => {
-    if (err) throw err;
-    userList = JSON.parse(data);
-  });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+const userList = require('./models/users-list');
+
+// let userList;
+// const userFinder = () => {
+//   fs.readFile(__dirname + '/models/users-list.js', 'utf-8', (err, data) => {
+//     if (err) throw err;
+//     userList = JSON.parse(data);
+//     console.log(1);
+//   });
+// }
+// userFinder();
+
+const idGenerator = () => {
+  return '_' + Math.random().toString(36).substr(2, 9);  
 }
-userFinder();
+
+const idAssigner = (json) => {
+
+  for (let i = 0; i < json.length; i++){
+    
+    console.log(json[i]);
+    if (!json[i].hasOwnProperty("id")){
+      let id = idGenerator();
+      json[i]["id"] = id;
+    }
+    
+  }
+
+}
 
 const findAndRemove = (array, property, value) => {
   array.forEach(function(result, index) {
     if(result[property] == value) {
       //Remove from array
       array.splice(index, 1);
+    }    
+  });
+}
+
+const findAndUpdate = (array, property, value, newValue) => {
+  array.forEach(function(result, index) {
+    if(result[property] == value) {
+      //Remove from array
+      array.splice(index, 1, newValue);
     }    
   });
 }
@@ -39,30 +72,52 @@ app.get('/', (req, res) => {
 app.get('/users', (req, res) => {
   
   
-  if (Object.keys(req.query).length == 4) {
+//   if (Object.keys(req.query).length == 4) {
 
-    let newUser = req.query;
-    console.log(newUser);
-    userList.push(newUser);
-    console.log("add user");
-    // check id
+//     let newUser = req.query;
+//     console.log(newUser);
+//     userList.push(newUser);
+//     console.log("add user");
+//     // check id
 
-  } else if (Object.keys(req.query).length == 1){
+//   } else if (Object.keys(req.query).length == 1){
 
-    console.log("delete user");
-    let objectToEdit = Object.keys(req.query);
+//     console.log("delete user");
+//     let objectToEdit = Object.keys(req.query);
 
-    objectToEdit = objectToEdit[0];
- console.log("objectToEdit ", objectToEdit);
-    findAndRemove(userList, 'id', objectToEdit);
-  }
-  
-  // userList
-//  console.log("userList ", userList);
+//     objectToEdit = objectToEdit[0];
+//  console.log("objectToEdit ", objectToEdit);
+//     findAndRemove(userList, 'id', objectToEdit);
+//   }
 
+  idAssigner(userList);
   res.render('users', { users: userList });
 
 })
+
+app.get('/users/:id', (req, res) => {
+  
+  let objectToEdit = req.params;
+  // debugger;
+  objectToEdit = '' + objectToEdit.id;
+  console.log(objectToEdit);
+  findAndRemove(userList, 'id', objectToEdit);
+  
+  res.render('users', { users: userList })
+})
+
+app.post('/users', (req, res) => {
+  
+  let newUser = req.body;
+
+  console.log(newUser.hasOwnProperty("id"));
+
+  userList.push(newUser);
+  console.log(userList);
+  // idAssigner(userList);
+  res.render('users', { users: userList });
+  
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
