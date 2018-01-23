@@ -10,18 +10,17 @@ block content
       th Email
       th Age
       th Delete
-      //- th Edit
+      th Edit
     each item in users
-      tr(user-id=item.id onclick="deleteUser()")
+      tr(user-id=item.id)
         td= item.name
         td= item.surname
         td= item.email
         td= item.age
         td 
-          button(type="button" user-id=item.id) Delete user
+          button(type="button" user-id=item.id onclick="deleteUser()") Delete user
         td 
-          //- form(action="http://127.0.0.1:3000/users" method="get") 
-            input(type="submit" value="Edit" name="user"+item.id)
+          button(type="button" user-id=item.id onclick="editUser()") Edit user
 
   div
     h4 Add new user
@@ -34,3 +33,17 @@ block content
     span Age:
     input(type="text" name="age" id="new-user-age")
     input(type="submit" value="Add" onclick="addUser()")
+
+
+
+  div
+    h4 Edit user, enter new props
+    span Name:
+    input(type="text" name="name" id="edit-user-name")
+    span Surname:
+    input(type="text" name="surname" id="edit-user-surname")
+    span Email:
+    input(type="text" name="email" id="edit-user-email")
+    span Age:
+    input(type="text" name="age" id="edit-user-age")
+    input(type="submit" value="Edit" id="edit-send-button" onclick="sendEditedUser()")

@@ -9,14 +9,38 @@ const app = express();
 const fs = require('fs');
 
 
-let userList;
-const userFinder = () => {
-  fs.readFile(__dirname + '/models/users-list.js', 'utf-8', (err, data) => {
-    if (err) throw err;
-    userList = JSON.parse(data);
-  });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+const userList = require('./models/users-list');
+
+// let userList;
+// const userFinder = () => {
+//   fs.readFile(__dirname + '/models/users-list.js', 'utf-8', (err, data) => {
+//     if (err) throw err;
+//     userList = JSON.parse(data);
+//     console.log(1);
+//   });
+// }
+// userFinder();
+
+const idGenerator = () => {
+  return '_' + Math.random().toString(36).substr(2, 9);  
 }
-userFinder();
+
+const idAssigner = (json) => {
+
+  for (let i = 0; i < json.length; i++){
+    
+    if (!json[i].hasOwnProperty("id")){
+      let id = idGenerator();
+      json[i]["id"] = id;
+      // console.log(json[i]);
+    }
+    
+  }
+
+}
 
 const findAndRemove = (array, property, value) => {
   array.forEach(function(result, index) {
@@ -27,25 +51,37 @@ const findAndRemove = (array, property, value) => {
   });
 }
 
+const findAndUpdate = (array, property, value, newValue) => {
+  array.forEach(function(result, index) {
+    if(result[property] == value) {
+      //Remove from array
+      array.splice(index, 1, newValue);
+    }    
+  });
+}
+
 // define the home page route
 app.get('/', (req, res) => {
   res.render('index', { title: 'This is home page' });
-
+  
 })
 
 
 app.get('/users', (req, res) => {
   
+  idAssigner(userList);
+  // console.log(userList);
   res.render('users', { users: userList });
   
 })
 
 app.post('/users', (req, res) => {
-  console.log(req.body.newUser)
-  console.log("req.body.newUser")
-  // res.send()
+  
+  let newUser = req.body;
+  userList.push(newUser);
+  // idAssigner(userList);
   res.render('users', { users: userList });
-  console.log("works")
+  
 });
 
 
@@ -61,6 +97,18 @@ app.delete('/users/:id', (req, res) => {
 })
 
 
+app.put('/users', (req, res) => {
+  
+  let objectToEdit = req.body;
+  let id = objectToEdit.id;
+  // debugger;
+  // objectToEdit = '' + objectToEdit.id;
+  findAndUpdate(userList, 'id', id, objectToEdit);
+  console.log(objectToEdit);
+  
+  res.render('users', { users: userList })
+})
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -68,8 +116,7 @@ app.set('view engine', 'pug');
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
+
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
