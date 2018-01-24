@@ -22,8 +22,7 @@ block content
           form(action="http://127.0.0.1:3000/users/"+item.id method="get")
             input(type="submit" value="Delete")
         td 
-          form(action="http://127.0.0.1:3000/users" method="get") 
-            input(type="submit" value="Edit" name=item.id)
+          button(type="button" user-id=item.id onclick="editUser()") Edit
 
   form(action="http://127.0.0.1:3000/users" method="post")
     h4 Add new user
@@ -36,6 +35,16 @@ block content
     span Age:
     input(type="text" name="age")
     input(type="submit" value="Add")
-//- http://example.com/over/there?name=ferret
-    //- span Text
-    //- input(type="text")
+  
+  form(action="http://127.0.0.1:3000/users/edit" method="post")
+    h4 Edit user, enter new props
+    span Name:
+    input(type="text" name="name" id="edit-user-name")
+    span Surname:
+    input(type="text" name="surname" id="edit-user-surname")
+    span Email:
+    input(type="text" name="email" id="edit-user-email")
+    span Age:
+    input(type="text" name="age" id="edit-user-age")
+    input(type="text" name="id" id="edit-user-id" hidden) 
+    input(type="submit" value="Edit")

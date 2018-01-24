@@ -34,8 +34,8 @@ const idAssigner = (json) => {
 
   for (let i = 0; i < json.length; i++){
     
-    console.log(json[i]);
-    if (!json[i].hasOwnProperty("id")){
+    
+    if (!Object.prototype.hasOwnProperty.call(json, 'id')){
       let id = idGenerator();
       json[i]["id"] = id;
     }
@@ -71,25 +71,6 @@ app.get('/', (req, res) => {
 // define the about route
 app.get('/users', (req, res) => {
   
-  
-//   if (Object.keys(req.query).length == 4) {
-
-//     let newUser = req.query;
-//     console.log(newUser);
-//     userList.push(newUser);
-//     console.log("add user");
-//     // check id
-
-//   } else if (Object.keys(req.query).length == 1){
-
-//     console.log("delete user");
-//     let objectToEdit = Object.keys(req.query);
-
-//     objectToEdit = objectToEdit[0];
-//  console.log("objectToEdit ", objectToEdit);
-//     findAndRemove(userList, 'id', objectToEdit);
-//   }
-
   idAssigner(userList);
   res.render('users', { users: userList });
 
@@ -98,23 +79,27 @@ app.get('/users', (req, res) => {
 app.get('/users/:id', (req, res) => {
   
   let objectToEdit = req.params;
-  // debugger;
   objectToEdit = '' + objectToEdit.id;
-  console.log(objectToEdit);
   findAndRemove(userList, 'id', objectToEdit);
-  
   res.render('users', { users: userList })
+
 })
 
 app.post('/users', (req, res) => {
   
   let newUser = req.body;
-
-  console.log(newUser.hasOwnProperty("id"));
-
   userList.push(newUser);
-  console.log(userList);
-  // idAssigner(userList);
+  idAssigner(userList);
+  res.render('users', { users: userList });
+  
+});
+
+app.post('/users/:id', (req, res) => {
+  
+  let objectToEdit = req.body;
+  let id = objectToEdit.id;
+  // console.log(objectToEdit)
+  findAndUpdate(userList, 'id', id, objectToEdit);
   res.render('users', { users: userList });
   
 });
