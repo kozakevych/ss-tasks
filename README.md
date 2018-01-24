@@ -57,3 +57,5 @@ user.name user.surname mail age
 - [ ] make form with ajax xhr request 
 
 
+1 service 
+2 components
