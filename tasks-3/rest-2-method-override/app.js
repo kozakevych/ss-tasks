@@ -7,20 +7,43 @@ const bodyParser = require('body-parser');
 
 const methodOverride = require('method-override');
 
-// const routes = require('./routes/routes');
-
 const app = express();
 const fs = require('fs');
 
+app.use(methodOverride('_method'));
 
-let userList;
-const userFinder = () => {
-  fs.readFile(__dirname + '/models/users-list.js', 'utf-8', (err, data) => {
-    if (err) throw err;
-    userList = JSON.parse(data);
-  });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+const userList = require('./models/users-list');
+
+// let userList;
+// const userFinder = () => {
+//   fs.readFile(__dirname + '/models/users-list.js', 'utf-8', (err, data) => {
+//     if (err) throw err;
+//     userList = JSON.parse(data);
+//     console.log(1);
+//   });
+// }
+// userFinder();
+
+const idGenerator = () => {
+  return '_' + Math.random().toString(36).substr(2, 9);  
 }
-userFinder();
+
+const idAssigner = (json) => {
+
+  for (let i = 0; i < json.length; i++){
+    
+    
+    if (!Object.prototype.hasOwnProperty.call(json, 'id')){
+      let id = idGenerator();
+      json[i]["id"] = id;
+    }
+    
+  }
+
+}
 
 const findAndRemove = (array, property, value) => {
   array.forEach(function(result, index) {
@@ -31,38 +54,53 @@ const findAndRemove = (array, property, value) => {
   });
 }
 
-// define the home page route
+const findAndUpdate = (array, property, value, newValue) => {
+  array.forEach(function(result, index) {
+    if(result[property] == value) {
+      //Remove from array
+      array.splice(index, 1, newValue);
+    }    
+  });
+}
+
 app.get('/', (req, res) => {
   res.render('index', { title: 'This is home page' });
 
 })
-app.use(bodyParser.urlencoded())
 
-
-app.use(methodOverride(options))
-// app.use(methodOverride(function (req, res) {
-//   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-//     // look in urlencoded POST bodies and delete it
-//     var method = req.body._method
-//     delete req.body._method
-//     return method
-//   }
-// }))
-// define the about route
-// app.use(methodOverride('_method', (req,res) => {
-//   req.send("holla");
-// }))  
-app.get('/users', (req,res)=>{
-  res.render('users', { users: userList });
-});
-// app.delete('/users/:id', (req, res) => {
-// app.use(methodOverride('_method=DELETE'))
-// app.delete('/users/:id', (req, res) => {
+app.get('/users', (req, res) => {
   
-//   console.log("success");
-//   res.render('users', { users: userList });
+  idAssigner(userList);
+  res.render('users', { users: userList });
 
-// })
+})
+
+app.post('/users', (req, res) => {
+  
+    let newUser = req.body;
+    userList.push(newUser);
+    idAssigner(userList);
+    res.render('users', { users: userList });
+  
+});
+
+app.put('/users', (req, res) => {
+
+  let objectToEdit = req.body;
+  let id = objectToEdit.id;
+  findAndUpdate(userList, 'id', id, objectToEdit);
+  res.render('users', { users: userList });  
+
+});
+
+app.delete('/users', (req, res) => {
+  
+  let objectToEdit = Object.keys(req.body);
+  findAndRemove(userList, 'id', objectToEdit);
+  res.render('users', { users: userList })
+
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
