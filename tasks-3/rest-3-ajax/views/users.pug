@@ -39,45 +39,43 @@ block content
     div(id="modal1" class="modal")
       div(class="modal-content")
 
-        div(class="row")
-          form(class="col s12")
-            div(class="row")
-              h4 Edit user
-              div(class="input-field col s6")
-                span Name:
-                input(type="text" name="name" id="edit-user-name")
-              div(class="input-field col s6")
-                span Surname:
-                input(type="text" name="surname" id="edit-user-surname")
-              div(class="input-field col s6")
-                span Email:
-                input(type="text" name="email" id="edit-user-email")
-              div(class="input-field col s6")
-                span Age:
-                input(type="number" name="age" id="edit-user-age")
-              button(class="btn waves-effect waves-light" type="submit" name="action" id="edit-send-button" onclick="sendEditedUser()") Edit user
-                i(class="material-icons right") send
-
+        h4 Edit user
+        div(class="input-field col s6")
+          span Name:
+          input(type="text" name="name" id="edit-user-name")
+        div(class="input-field col s6")
+          span Surname:
+          input(type="text" name="surname" id="edit-user-surname")
+        div(class="input-field col s6")
+          span Email:
+          input(type="text" name="email" id="edit-user-email")
+        div(class="input-field col s6")
+          span Age:
+          input(type="number" name="age" id="edit-user-age")
+      
+      div(class="modal-footer")
+        button(class="btn waves-effect modal-action modal-close waves-light" type="submit" name="action" id="edit-send-button" onclick="sendEditedUser()") Edit user
+          i(class="material-icons right") send
 
     div(id="modal2" class="modal")
       div(class="modal-content")
 
-        div(class="row")
-          form(id="add-user-form" class="col s12")
-            div(class="row")
-              h5 Add new user
-              div(class="input-field col s6")
-                input(type="text" id="new-user-name" name="name")
-                label(for="new-user-name") Name
-              div(class="input-field col s6")
-                input(type="text" id="new-user-surname" name="surname")
-                label(for="new-user-surname") Surname
-            div(class="row")
-              div(class="input-field col s6")
-                input(type="text" id="new-user-email" name="email")
-                label(for="new-user-email") Email
-              div(class="input-field col s6")
-                input(type="number" id="new-user-age" name="age")
-                label(for="new-user-age") Age
-              button(type="submit" name="action" class="btn-floating modal-trigger btn-medium" onclick="addUser()")
-                i(class="material-icons right") add
+          div(class="row")
+            h5 Add new user
+            div(class="input-field col s6")
+              input(type="text" id="new-user-name" name="name")
+              label(for="new-user-name") Name
+            div(class="input-field col s6")
+              input(type="text" id="new-user-surname" name="surname")
+              label(for="new-user-surname") Surname
+          div(class="row")
+            div(class="input-field col s6")
+              input(type="text" id="new-user-email" name="email")
+              label(for="new-user-email") Email
+            div(class="input-field col s6")
+              input(type="number" id="new-user-age" name="age")
+              label(for="new-user-age") Age
+
+      div(class="modal-footer")
+        button(type="submit" name="action" class="btn-floating  modal-action modal-close btn-medium" onclick="addUser()")
+          i(class="material-icons right") add

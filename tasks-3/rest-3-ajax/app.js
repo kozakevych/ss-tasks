@@ -88,7 +88,8 @@ app.post('/users', (req, res) => {
   
   let newUser = req.body;
   userList.push(newUser);
-  res.render('users', { users: userList });
+  idAssigner(userList);
+  res.send(userList);
   
 });
 
@@ -96,20 +97,23 @@ app.post('/users', (req, res) => {
  * Deleting user
  */
 app.delete('/users/:id', (req, res) => {
+
   let objectToEdit = req.params;
   objectToEdit = '' + objectToEdit.id;
   findAndRemove(userList, 'id', objectToEdit);
-  res.render('users', { users: userList })
+  res.send(userList);
 })
 
 /**
  * Editing user
  */
 app.put('/users', (req, res) => {
+
   let objectToEdit = req.body;
   let id = objectToEdit.id;
   findAndUpdate(userList, 'id', id, objectToEdit);
-  res.render('users', { users: userList })
+  res.send(userList);
+  
 })
 
 /**

@@ -1,0 +1,27 @@
+table(class="striped bordered centered")
+  caption List of Users
+  thead
+    tr
+      th Name
+      th Surname
+      th Email
+      th Age
+      th Delete
+      th Edit
+  tbody
+    if Object.keys(users).length == 0
+      tr
+        td(colspan="6") No users to show :(
+    else
+      each item in users
+        tr(user-id=item.id)
+          td= item.name
+          td= item.surname
+          td= item.email
+          td= item.age
+          td 
+            button(class="btn-floating btn-medium red" type="button" )
+              i(class="large material-icons"  user-id=item.id onclick="deleteUser()") delete
+          td 
+            button(data-target="modal1" class="btn-floating modal-trigger btn-medium" type="button" )
+              i(class="large material-icons" user-id=item.id  onclick="editUser()") mode_edit
